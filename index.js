@@ -1,10 +1,10 @@
 const mineflayer = require('mineflayer');
 
 const botArgs = {
-    host: 'SMP311231.aternos.me', // Sadece adres
-    port: 28665,                  // Sadece sayı
+    host: 'SMP311231.aternos.me',
+    port: 28665,
     username: 'afk_reis_bot',
-    version: '1.21.4'             // Sunucu sürümün farklıysa burayı düzelt
+    version: '1.21.1'
 };
 
 const initBot = () => {
@@ -15,15 +15,15 @@ const initBot = () => {
     });
 
     bot.on('spawn', () => {
-        bot.chat('Ben geldim! Artık bu sunucu kapanmaz.');
+        console.log("Bot sunucuda doğdu!");
     });
 
     bot.on('error', (err) => {
-        console.log("Hata çıktı: " + err);
+        console.log("Hata: " + err);
     });
 
     bot.on('end', () => {
-        console.log("Bot düştü, tekrar bağlanıyor...");
+        console.log("Bot düştü, 5 saniye sonra tekrar deniyor...");
         setTimeout(initBot, 5000);
     });
 };
