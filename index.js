@@ -1,42 +1,31 @@
-const http = require('http');
-// Render'ın uyumaması için gereken web sunucusu
-http.createServer((req, res) => {
-  res.write("Bot 7/24 Aktif!");
-  res.end();
-}).listen(8080);
-
 const mineflayer = require('mineflayer');
 
-const settings = {
-  host: "SMP311231.aternos.me",
-  port: 28665, // Burayı kendi portunla kontrol et reis
-  username: "afk_reis_bot",
-  version: "1.21.4"
+const botArgs = {
+    host: 'SMP311231.aternos.me', // Sadece adres
+    port: 28665,                  // Sadece sayı
+    username: 'afk_reis_bot',
+    version: '1.21.4'             // Sunucu sürümün farklıysa burayı düzelt
 };
 
-// ... (üstteki http ve settings kısımları aynı kalsın) ...
+const initBot = () => {
+    const bot = mineflayer.createBot(botArgs);
 
-const bot = mineflayer.createBot(settings);
+    bot.on('login', () => {
+        console.log("BOMBA GİBİ GİRDİK REİS! 7/24 AKTİF.");
+    });
 
-bot.on('spawn', () => {
-  console.log('BOMBA GİBİ GİRDİK REİS!');
-  
-  // BOT İÇERİ GİRİNCE ŞİFRE BELİRLİYOR (Örn: Omer123)
-  // Eğer sunucu "Kayıtlısın, giriş yap" derse /login Omer123 yazar.
-  // Değilse /register ile kayıt olur.
-  setTimeout(() => {
-    bot.chat('/register Omer123 Omer123');
-    bot.chat('/login Omer123');
-    console.log('Kayıt/Giriş işlemi yapıldı.');
-  }, 3000); // Girdikten 3 saniye sonra yazar
-});
+    bot.on('spawn', () => {
+        bot.chat('Ben geldim! Artık bu sunucu kapanmaz.');
+    });
 
-// ... (geri kalan hata kısımları aynı) ...
-});
+    bot.on('error', (err) => {
+        console.log("Hata çıktı: " + err);
+    });
 
-bot.on('end', () => {
-  console.log('Bağlantı koptu, tekrar deneniyor...');
-  setTimeout(() => { process.exit(); }, 15000); 
-});
+    bot.on('end', () => {
+        console.log("Bot düştü, tekrar bağlanıyor...");
+        setTimeout(initBot, 5000);
+    });
+};
 
-bot.on('error', (err) => console.log('Hata: ' + err.message));
+initBot();
