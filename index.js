@@ -14,10 +14,24 @@ const settings = {
   version: "1.21.4"
 };
 
+// ... (üstteki http ve settings kısımları aynı kalsın) ...
+
 const bot = mineflayer.createBot(settings);
 
 bot.on('spawn', () => {
-  console.log('BOMBA GİBİ GİRDİK REİS! 7/24 AKTİF.');
+  console.log('BOMBA GİBİ GİRDİK REİS!');
+  
+  // BOT İÇERİ GİRİNCE ŞİFRE BELİRLİYOR (Örn: Omer123)
+  // Eğer sunucu "Kayıtlısın, giriş yap" derse /login Omer123 yazar.
+  // Değilse /register ile kayıt olur.
+  setTimeout(() => {
+    bot.chat('/register Omer123 Omer123');
+    bot.chat('/login Omer123');
+    console.log('Kayıt/Giriş işlemi yapıldı.');
+  }, 3000); // Girdikten 3 saniye sonra yazar
+});
+
+// ... (geri kalan hata kısımları aynı) ...
 });
 
 bot.on('end', () => {
